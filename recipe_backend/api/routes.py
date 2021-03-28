@@ -7,4 +7,6 @@ routers = DefaultRouter()
 routers.register("users", ChefUserViewSet)
 routers.register("recipes", RecipeViewSet)
 
-urlpatterns =[path("", include(routers.urls))]
+urlpatterns = [
+    path("", include(routers.urls)),
+]

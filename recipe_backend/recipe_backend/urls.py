@@ -17,9 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+from api.views import RecipeViewSet
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include("api.routes"), name="api"),
     path('api/token/', TokenObtainPairView.as_view(), name= "token_obtain_pair"),
     path('api/token/refresh/', TokenRefreshView.as_view(), name="token_refresh"),
+    path('api/recipes/search_recipe', RecipeViewSet.as_view({'post':'search_recipe'}), name="search_recipe"),
+    path('api/recipes/recipes_chef', RecipeViewSet.as_view({'post':'recipes_chef'}), name="recipes_chef"),
 ]
