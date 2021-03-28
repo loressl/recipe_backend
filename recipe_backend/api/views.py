@@ -13,6 +13,11 @@ class ChefUserViewSet(viewsets.ModelViewSet):
     serializer_class = ChefUserSerializer
     lookup_field = "id"
 
+    def get_permissions(self):
+        if self.action == 'update' or self.action == 'destroy':
+            self.permission_classes = [IsAuthenticatedOrReadOnly]
+        return super(self.__class__, self).get_permissions()
+
     def create(self, request, *args, **kwargs):
         try:
             ChefUser.objects.get(email=request.data['email'])
