@@ -7,16 +7,6 @@ from rest_framework.decorators import action
 
 # Create your views here.
 
-
-class RecipePermission(BasePermission):
-    message = 'Edição das receitas é restrita para os cadastrados.'
-
-    def has_object_permission(self, request, view, obj):
-        if request.method in SAFE_METHODS:
-            return True
-        return obj.auth == request.user_id
-
-
 class ChefUserViewSet(viewsets.ModelViewSet):
 
     queryset = ChefUser.objects.all()
@@ -113,7 +103,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    @action(methods=['post'], detail=True, url_path='search-recipe', url_name='search_recipe', permission_classes=[AllowAny])
+    @action(methods=['post'], detail=True, url_path='search-recipe', url_name='search_recipe')
     def search_recipe(self, request):
         result_title = Recipe.objects.filter(
             title__icontains=request.data['search'])
@@ -125,12 +115,19 @@ class RecipeViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(result_final, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @action(methods=['post'], detail=True,  url_path='recipes-chef', url_name='recipes_chef', permission_classes=[AllowAny])
+    @action(methods=['post'], detail=True,  url_path='recipes-chef', url_name='recipes_chef')
     def recipes_chef(self, request):
-        #verificar se vem dois nomes ou um para procurar pelo segundo nome
-        chef = ChefUser.objects.filter(first_name__icontains=request.data['search'])
-        result_recipes = Recipe.objects.filter(chef= chef[0].id)
-        if not result_recipes:
+        names = request.data['search'].split(' ')
+        results = []
+        if len(names) > 1:
+            if names[0] and names[1]:
+                chef = ChefUser.objects.filter(first_name__icontains = names[0], last_name= names[1])
+        else:
+            chef = ChefUser.objects.filter(first_name__icontains = names[0])
+            for user in chef:
+                result_recipes = Recipe.objects.filter(chef= user.id)
+                results.append(result_recipes)
+        if not results[0]:
             return Response({"mensagem": "Não existe receitas para essa busca."}, status=status.HTTP_404_NOT_FOUND)
-        serializer = self.get_serializer(result_recipes, many=True)
+        serializer = self.get_serializer(results[0], many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
