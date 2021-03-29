@@ -4,6 +4,18 @@ API desenvolvida para gerenciamento de receitas de cozinha.
 
 ## FEATURES 
 
+- [x] Cadastrar um Chef
+- [x] Pegar o token 
+- [x] Retornar um Chef
+- [x] Atualizar dados de um Chef  
+- [x] Remover um Chef
+- [x] Cadastrar uma Receita 
+- [x] Atualizar uma Receita
+- [x] Retornar uma Receita pelo ID
+- [x] Retornar todas as Receitas
+- [x] Remover uma Receita
+- [x] Retornar receitas por conter nome no título ou ingredientes
+- [x] Retornar receitas de um Chef específico   
 
 ## 🛠 TECNOLOGIAS
 
@@ -13,6 +25,16 @@ API desenvolvida para gerenciamento de receitas de cozinha.
 
 > OBSERVAÇÃO: PRECISA TER O PIPENV INSTALDO NA MÁQUINA
 
+- Fazer o clone do projeto
+    - git clone https://github.com/loressl/recipe_backend.git
+- Abrir a pasta do projeto
+- Abrir o terminal e digitar os seguintes comandos:
+    - pipenv shell : criar ou activar o ambiente virtual
+    - pipenv install : instalar os packages
+    - python manage.py migrate : criar as tabelas no banco de dados
+    - python manage.py runserver : subir o servidor
+    - exit : sair do ambiente virtual
+    - 
 
 ## COMO RODAR OS TESTES
 
