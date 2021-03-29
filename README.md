@@ -31,7 +31,7 @@ API desenvolvida para gerenciamento de receitas de cozinha.
 - Abrir o terminal e digitar os seguintes comandos:
     - pipenv shell : criar ou activar o ambiente virtual
     - pipenv install : instalar os packages
-    - python manage.py migrate : criar as tabelas no banco de dados
+    - python manage.py migrate : criar as tabelas no banco de dados (dentro da outra pasta recipe_backend, pois é onde está o manage.py)
     - python manage.py runserver : subir o servidor
     - exit : sair do ambiente virtual
     - 
